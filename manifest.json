@@ -2,7 +2,7 @@
 "manifest_version" : 3,
 "name": "BastterPartners",
 "description": "Aplicar cupons de desconto da Bastter.com em sites parceiros",
-"version": "0.0.2",
+"version": "0.0.3",
 
 "action": {
   "default_title": "BastterPartners",
@@ -27,7 +27,8 @@
 
 "host_permissions" : [
   "https://huoya.parceiropetz.com.br/comprarAgora_Loja.html*",
-  "https://www.remessaonline.com.br/app/transferencia"
+  "https://www.remessaonline.com.br/app/transferencia",
+  "http://example.com/"
 ],
    
 "permissions" : [
