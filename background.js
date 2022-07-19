@@ -3,7 +3,7 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
     if (changeInfo.status == 'complete') { 
         
         if (tab.url === "https://www.remessaonline.com.br/app/transferencia") {
-            notification();
+            notification2();
             chrome.notifications.onClicked.addListener(onClickNotificationRemessa);
         }
         if (tab.url.includes("amazon.com.br") && !tab.url.includes("tag=bastter-20") && !tab.url.includes("associados")) {
@@ -22,8 +22,22 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
             chrome.notifications.onClicked.addListener(onClickNotificationPetz);
         }
         if (tab.url === "https://huoya.parceiropetz.com.br/comprarAgora_Loja.html") {
-            notification2();
-            chrome.notifications.onClicked.addListener(onClickNotificationPetz2);   
+            chrome.tabs.query({ 
+                currentWindow: true,
+                active: true
+            }, function (tab) {
+                chrome.scripting.executeScript({
+                    function: () => document.querySelector('input[name = "cupomDesconto"]').value,
+                    target: {tabId: tab[0].id}
+                }, function (selection){
+                    console.log(selection[0].result)
+                    if(selection[0].result !== "15PARCEIROPETZ"){
+                        notification2(),
+                        chrome.notifications.onClicked.addListener(onClickNotificationPetz2);
+                    }
+                })
+            });
+            
         }
     }
     })

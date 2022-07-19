@@ -2,7 +2,7 @@
 "manifest_version" : 3,
 "name": "BastterPartners",
 "description": "Aplicar cupons de desconto da Bastter.com em sites parceiros",
-"version": "0.0.3",
+"version": "0.0.4",
 
 "action": {
   "default_title": "BastterPartners",
