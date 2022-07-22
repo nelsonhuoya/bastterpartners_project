@@ -1,41 +1,52 @@
 {
-"manifest_version" : 3,
+"manifest_version" : 2,
 "name": "BastterPartners",
 "description": "Aplicar cupons de desconto da Bastter.com em sites parceiros",
-"version": "0.0.4",
+"version": "0.0.5",
 
-"action": {
+"browser_action": {
   "default_title": "BastterPartners",
   "default_icon": "superpas.png",
   "default_popup": "index.html"
 },
 
+"icons": {
+  "48": "superpas-48.png"
+},
+
 "background": {
-    "service_worker": "background.js"
+    "scripts": ["background.js"]
+},
+
+"browser_specific_settings": {
+  "gecko": {
+    "id": "nelsonhuoya@gmail.com"
+  }
 },
 
 "commands": {
   "bastter": {
-		"suggested_key": "Ctrl+B",
+		"suggested_key": {
+      "default":"Alt+Z"
+    },
 		"description": "Abrir a Bastter.com"
 	},
 	"bastter-system": {
-		"suggested_key": "Ctrl+A",
+		"suggested_key": {
+      "default": "Alt+A"
+    },
 		"description": "Abrir o Bastter System"
 	}
 },
 
-"host_permissions" : [
-  "https://huoya.parceiropetz.com.br/comprarAgora_Loja.html*",
-  "https://www.remessaonline.com.br/app/transferencia",
-  "http://example.com/"
-],
-   
 "permissions" : [
     "cookies",
     "tabs",
     "scripting",
-    "notifications"
+    "notifications",
+    "https://huoya.parceiropetz.com.br/comprarAgora_Loja.html*",
+  "https://www.remessaonline.com.br/app/transferencia",
+  "http://example.com/"
 ]
 
 }
