@@ -1,4 +1,4 @@
-chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) { 
+browser.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) { 
     // listener for tab opens
     if (changeInfo.status == 'complete') { 
         
@@ -10,7 +10,7 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
             browser.cookies.get({ url: 'http://example.com', name: 'Bastter' },
                 function (cookie) {
                     if (cookie) {
-                   
+                        
                     } else {
                     notification();
                     browser.notifications.onClicked.addListener(onClickNotificationAmazon);
@@ -21,22 +21,16 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
             notification();
             browser.notifications.onClicked.addListener(onClickNotificationPetz);
         }
+
         if (tab.url === "https://huoya.parceiropetz.com.br/comprarAgora_Loja.html") {
             browser.tabs.query({ 
                 currentWindow: true,
                 active: true
             }, function (tab) {
-                chrome.tabs.executeScript(tab[0].id,{
-                    file:"injector3.js",
-                }, function(selection) {
-                    console.log(selection[0])
-                    if (selection[0] !== "15PARCEIROPETZ") {
-                        notification2(),
-                        chrome.notifications.onClicked.addListener(onClickNotificationPetz2);
-                    } 
-                });
+                browser.tabs.executeScript(tab[0].id,{
+                    file: "injector3.js"
+                }, receiveText); 
             });
-            
         }
     }
     })
@@ -63,7 +57,7 @@ function onClickNotificationAmazon() {
         browser.tabs.update(tab.id, {
             url: tab[0].url + "?tag=bastter-20"
         });
-        browser.cookies.set({ url: "http://example.com/", name: "Bastter", value: "123", expirationDate: (new Date().getTime()/1000) + 60 *5});
+        browser.cookies.set({ url: "http://example.com/", name: "Bastter", value: "123"}); 
     });
 }  
 function onClickNotificationPetz() {
@@ -122,4 +116,11 @@ browser.commands.onCommand.addListener( function(command) {
     }
 });
 
+function receiveText(selection){
+    console.log(selection[0]);
+    if(selection[0]!== "15PARCEIROPETZ"){
+        notification2(),
+        browser.notifications.onClicked.addListener(onClickNotificationPetz2);
+    }
+};
     
