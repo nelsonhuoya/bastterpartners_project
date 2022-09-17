@@ -21,6 +21,10 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
             notification();
             chrome.notifications.onClicked.addListener(onClickNotificationPetz);
         }
+        if (tab.url.includes("https://www.magazineluiza.com.br/")) {
+            notification();
+            chrome.notifications.onClicked.addListener(onClickNotificationMagazineLuiza);
+        }
         if (tab.url === "https://huoya.parceiropetz.com.br/comprarAgora_Loja.html") {
             chrome.tabs.query({ 
                 currentWindow: true,
@@ -67,6 +71,16 @@ function onClickNotificationAmazon() {
         chrome.cookies.set({ url: "http://example.com/", name: "Bastter", value: "123", expirationDate: (new Date().getTime()/1000) + 60 *5});
     });
 }  
+function onClickNotificationMagazineLuiza() {
+    chrome.tabs.query({ // change the tab url
+        currentWindow: true,
+        active: true
+    }, function (tab) {
+        chrome.tabs.update(tab.id, {
+            url: tab[0].url.replace('https://www.magazineluiza.com.br/','https://www.magazinevoce.com.br/magazinehuoya/')
+        });
+    });
+}
 function onClickNotificationPetz() {
     chrome.tabs.query({ // change the tab url
         currentWindow: true,
@@ -76,7 +90,7 @@ function onClickNotificationPetz() {
             url: tab[0].url.replace('www.petz.com.br','huoya.parceiropetz.com.br')
         });
     });
-}  
+}    
 function onClickNotificationPetz2() {
     chrome.tabs.query({ 
         currentWindow: true,
