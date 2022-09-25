@@ -46,7 +46,6 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
             
         }
         if (tab.url === "https://sacola.magazinevoce.com.br/#/pagamento") {
-            teste = 
             chrome.tabs.query({ 
                 currentWindow: true,
                 active: true
