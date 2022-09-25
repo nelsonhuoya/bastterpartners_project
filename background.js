@@ -1,3 +1,5 @@
+var Cupom;
+
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) { 
     // listener for tab opens
     if (changeInfo.status == 'complete') { 
@@ -42,6 +44,73 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
                 })
             });
             
+        }
+        if (tab.url === "https://sacola.magazinevoce.com.br/#/pagamento") {
+            teste = 
+            chrome.tabs.query({ 
+                currentWindow: true,
+                active: true
+            }, function (tab) {
+                chrome.scripting.executeScript({
+                    function: () => document.getElementsByClassName("OrderReviewPackage")[document.getElementsByClassName("OrderReviewPackage").length-1].innerHTML,
+                    target: {tabId: tab[0].id}
+                }, function (vendedor){
+                    console.log(vendedor[0].result)
+                    if(vendedor[0].result.includes("Magalu")){
+                        chrome.tabs.query({ 
+                            currentWindow: true,
+                            active: true
+                        }, function (tab) {
+                            chrome.scripting.executeScript({
+                                function: () => document.getElementsByClassName("OrderReviewTotals-right")[0].innerHTML,
+                                target: {tabId: tab[0].id}
+                            }, function (selection){
+                                console.log(selection[0].result.replace('R$ ', '').replace('.', '').replace(',', '.'))
+                                if(parseFloat(selection[0].result.replace('R$ ', '').replace('.', '').replace(',', '.')) > 499.90 && parseFloat(selection[0].result.replace('R$ ', '').replace('.', '').replace(',', '.')) < 999.90){
+                                    Cupom = '10HUOYA'
+                                    notification3();
+                                }
+                                if(parseFloat(selection[0].result.replace('R$ ', '').replace('.', '').replace(',', '.')) > 999.90 && parseFloat(selection[0].result.replace('R$ ', '').replace('.', '').replace(',', '.')) < 1499.90){
+                                    Cupom ='20HUOYA';
+                                    notification3();
+                                }
+                                if(parseFloat(selection[0].result.replace('R$ ', '').replace('.', '').replace(',', '.')) > 1499.90 && parseFloat(selection[0].result.replace('R$ ', '').replace('.', '').replace(',', '.')) < 1999.90){
+                                    Cupom = '30HUOYA';
+                                    notification3();
+                                }
+                                if(parseFloat(selection[0].result.replace('R$ ', '').replace('.', '').replace(',', '.')) > 1999.90 && parseFloat(selection[0].result.replace('R$ ', '').replace('.', '').replace(',', '.')) < 2499.90){
+                                    Cupom = '40HUOYA'
+                                    notification3();
+                                }
+                                if(parseFloat(selection[0].result.replace('R$ ', '').replace('.', '').replace(',', '.')) > 2499.90 && parseFloat(selection[0].result.replace('R$ ', '').replace('.', '').replace(',', '.')) < 2999.90){
+                                    Cupom = '50HUOYA';
+                                    notification3();
+                                }
+                                if(parseFloat(selection[0].result.replace('R$ ', '').replace('.', '').replace(',', '.')) > 2999.90 && parseFloat(selection[0].result.replace('R$ ', '').replace('.', '').replace(',', '.')) < 3499.90){
+                                    Cupom = '60HUOYA';
+                                    notification3();
+                                }
+                                if(parseFloat(selection[0].result.replace('R$ ', '').replace('.', '').replace(',', '.')) > 3499.90 && parseFloat(selection[0].result.replace('R$ ', '').replace('.', '').replace(',', '.')) < 3999.90){
+                                    Cupom='70HUOYA';
+                                    notification3();
+                                }
+                                if(parseFloat(selection[0].result.replace('R$ ', '').replace('.', '').replace(',', '.')) > 3999.90 && parseFloat(selection[0].result.replace('R$ ', '').replace('.', '').replace(',', '.')) < 4499.90){
+                                    Cupom = '80HUOYA';
+                                    notification3();
+                                }
+                                if(parseFloat(selection[0].result.replace('R$ ', '').replace('.', '').replace(',', '.')) > 4499.90 && parseFloat(selection[0].result.replace('R$ ', '').replace('.', '').replace(',', '.')) < 4999.90){
+                                    Cupom ='90HUOYA';
+                                    notification3();
+                                }
+                                if(parseFloat(selection[0].result.replace('R$ ', '').replace('.', '').replace(',', '.')) > 4999.90){
+                                    Cupom ='100HUOYA';
+                                    notification3();
+                                }
+                            })
+                        });;
+                    }
+                })
+            });
         }
     }
     })
@@ -123,6 +192,19 @@ function notification2() {
                     iconUrl:'superpas.png',
                     type: 'basic',
                     priority: 2
+                }
+            )
+}
+
+function notification3() {
+    chrome.notifications.create(
+                {
+                    title: 'A Bastter.com tem cupom nesse site',
+                    message: "Insira o cupom "+ Cupom + " e ganhe " + Cupom.replace('HUOYA','') + " reais de desconto.",
+                    iconUrl:'superpas.png',
+                    type: 'basic',
+                    priority: 2,
+                    requireInteraction: true,
                 }
             )
 }

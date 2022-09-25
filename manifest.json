@@ -32,7 +32,8 @@
 "host_permissions" : [
   "https://huoya.parceiropetz.com.br/comprarAgora_Loja.html*",
   "https://www.remessaonline.com.br/app/transferencia",
-  "http://example.com/"
+  "http://example.com/",
+  "https://sacola.magazinevoce.com.br/#/pagamento"
 ],
    
 "permissions" : [
