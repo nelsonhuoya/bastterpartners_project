@@ -55,7 +55,6 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
                     function: () => document.getElementsByClassName("OrderReviewPackage")[document.getElementsByClassName("OrderReviewPackage").length-1].innerHTML,
                     target: {tabId: tab[0].id}
                 }, function (vendedor){
-                    console.log(vendedor[0].result)
                     if(vendedor[0].result.includes("Magalu")){
                         chrome.tabs.query({ 
                             currentWindow: true,
